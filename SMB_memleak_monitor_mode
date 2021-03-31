@@ -1,0 +1,22 @@
+/opt/fw1/bin/cap_monitor_port.sh
+
+
+#
+rm /opt/fw1/boot/modules/fwkern.conf
+echo "fw_local_interface_anti_spoofing=0" > /opt/fw1/boot/modules/fwkern.conf
+echo "fw_antispoofing_enabled=0" >> /opt/fw1/boot/modules/fwkern.conf
+echo "fw_bridge_antispoofing=0" >> /opt/fw1/boot/modules/fwkern.conf
+chmod 777 /opt/fw1/boot/modules/fwkern.conf
+
+echo "fw ctl set int fw_local_interface_anti_spoofing 0" > /pfrm2.0/etc/userScript
+echo "fw ctl set int fw_antispoofing_enabled 0" > /pfrm2.0/etc/userScript
+echo "fw ctl set int fw_local_interface_anti_spoofing 0" > /pfrm2.0/etc/userScript
+echo "/opt/fw1/bin/cap_monitor_port.sh" >> /pfrm2.0/etc/userScript
+chmod 777 /pfrm2.0/etc/userScript
+
+echo "#!/bin/bash" > /pfrm2.0/etc/SCADA_check_Entries.sh
+echo "fw ctl get int fw_local_interface_anti_spoofing" >> /pfrm2.0/etc/SCADA_check_Entries.sh
+echo "fw ctl get int fw_antispoofing_enabled" >> /pfrm2.0/etc/SCADA_check_Entries.sh
+echo "fw ctl get int fw_local_interface_anti_spoofing" >> /pfrm2.0/etc/SCADA_check_Entries.sh
+chmod 777 >> /pfrm2.0/etc/SCADA_check_Entries.sh
+reboot
